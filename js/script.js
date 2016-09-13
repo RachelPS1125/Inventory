@@ -1,12 +1,11 @@
 $(document).ready(function(){
 	function closeSide(){
-		document.getElementById('side-nav').style.width = '0';
+		$('.side-nav').css('margin-left','-15rem');
 		$('.open').show();
 		$('.close').hide();
 	}
 	$('.open').click(function(){
-		document.getElementById('side-nav').style.width = '15rem';
-		document.getElementById('side-nav').style.marginLeft = '0';
+		$('.side-nav').css('margin-left','0');
 		$('.open').hide();
 		$('.close').show();
 	});

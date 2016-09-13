@@ -1,14 +1,17 @@
-*{
-	margin-left: 3rem;
+html, body{
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+h1, p{
+	margin: 0;
 }
 .title, .title-out, .title-inventory{
 	margin-left: 30%;
 }
 .title-inventory{
 	display:none;
-}
-.title{
-	margin-top: 2rem;
 }
 .logo{
 	float: left;
@@ -22,48 +25,48 @@
 .av-borrowed, .game-inventory, .av-inventory{
 	display: none;
 }
-#side-nav{
+.side-nav{
 	height: 100%;
-	width: 0%;
 	position: fixed;
 	z-index: 1;
 	top: 0;
 	left: 0;
 	background-color: black;
-	padding-top: 5rem;
 	transition: .5s;
-	overflow-x: hidden;
+	border: 1px solid;
+	margin:0;
+	padding-right: 3rem;
+	margin-left: -15rem;
 }
-#side-nav p{
-	padding: .5rem .5rem .5rem 2rem;
+.side-nav > p{
+	text-align: center;
 	font-size: 2rem;
 	color: gray;
 	display: block;
 	transition: .3s;
 }
-#side-nav p:hover{
+.gaming-side{
+	margin-top: 5rem;
+}
+.side-nav p:hover{
 	color: white;
 	cursor: pointer;
 }
 .side-arrow{
-	left: 0;
-	top: 0;
-	height: 100%;
 	display: block;
-	position: fixed;
-	background-color: black;
 	z-index: 1;
-	width: 2rem;
-	margin:0;
 	padding:0;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);	
+	webkit-transform: translateY(-50%);
+	height: 35px;
+	right: 0;
+	margin: 0 1rem;
 }
 .side-arrow p{
 	margin: 0;
-	margin-left: .5rem;
-	position: fixed;
-	display: block;
 	z-index: 2;
-	margin-top: 50%;
 	color: gray;
 	font-weight: bold;
 	font-size: 2rem;
