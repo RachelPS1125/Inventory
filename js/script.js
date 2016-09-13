@@ -1,0 +1,52 @@
+$(document).ready(function(){
+	function closeSide(){
+		document.getElementById('side-nav').style.width = '0';
+		$('.open').show();
+		$('.close').hide();
+	}
+	$('.open').click(function(){
+		document.getElementById('side-nav').style.width = '15rem';
+		document.getElementById('side-nav').style.marginLeft = '0';
+		$('.open').hide();
+		$('.close').show();
+	});
+	$('.close').click(function(){
+		closeSide();
+	});
+	$('.gaming-side').click(function(){
+		closeSide();
+		$('.game-inventory').show();
+		$('.games-borrowed').hide();		
+		$('.av-inventory').hide();
+		$('.av-borrowed').hide();
+		$('.title-out').hide();
+		$('.title-inventory').show();
+	});
+	$('.game-borrowed-side').click(function(){
+		closeSide();
+		$('.game-inventory').hide();
+		$('.games-borrowed').show();		
+		$('.av-inventory').hide();
+		$('.av-borrowed').hide();
+		$('.title-out').show();
+		$('.title-inventory').hide();
+	});
+	$('.av-side').click(function(){
+		closeSide();
+		$('.game-inventory').hide();
+		$('.games-borrowed').hide();		
+		$('.av-inventory').show();
+		$('.av-borrowed').hide();
+		$('.title-out').hide();
+		$('.title-inventory').show();
+	});
+	$('.av-borrowed-side').click(function(){
+		closeSide();
+		$('.game-inventory').hide();
+		$('.games-borrowed').hide();		
+		$('.av-inventory').hide();
+		$('.av-borrowed').show();
+		$('.title-out').show();
+		$('.title-inventory').hide();
+	});
+});
