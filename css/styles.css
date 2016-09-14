@@ -7,15 +7,14 @@ html, body{
 h1, p{
 	margin: 0;
 }
-.title, .title-out, .title-inventory{
-	margin-left: 30%;
+header{
+	margin-left: 15rem;
 }
 .title-inventory{
 	display:none;
 }
 .logo{
 	float: left;
-	margin-left: 15%;
 }
 .games-borrowed, .av-borrowed, .game-inventory, .av-inventory{
 	width: 70%;
