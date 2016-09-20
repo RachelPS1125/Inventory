@@ -61,4 +61,26 @@ $(document).ready(function(){
 			};
 		};
 	});
+	$('.submit').click(function(){
+		var first = $('.first-name').val();
+		var last = $('.last-name').val();
+		var phone = $('.phone').val();
+		var studentID = $('.id-num').val();
+		var time = $('.time').val();
+		$.ajax({
+		url: 'https://usdangameinventory-b5d8.restdb.io/rest/borrower-information',
+		method: 'POST',
+		data: {
+			'firstName': first,
+			'lastName': last,
+			'phoneNumber': phone,
+			'studentID': studentID,
+			'timeBorrowed': time,
+			'active': true
+		},
+		headers: {
+			'x-apikey': '57d1c8248dfe9ef744ec9bfe'
+		}
+	}).done();
+	});
 });

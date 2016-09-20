@@ -85,6 +85,9 @@ h1, p{
 	margin: 0 auto;
 	border: 1px solid;
 }
+.new-borrow{
+	margin-left: 50px;
+}
 @media (max-width: 414px){
 	.test{
 		float: none;
