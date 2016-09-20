@@ -4,52 +4,80 @@
 	<meta charset="UTF-8">
 	<title>Inventory Check-out</title>
 	<link rel="stylesheet" href="css/styles.css">
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+
 </head>
 <body>
-	<header>
-		<img class='logo' src="images/usdanlogo.gif" alt="Usdan Logo">
-		<h1 class='title'>Usdan Inventory Tracking</h1>
-		<h2 class='title-out'>Currently Checked-Out</h2>
-		<h2 class='title-inventory'>Current Inventory</h2>
-	</header>
-	<table class='games-borrowed'>
-		<tr>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Item Borrowed</th>
-			<th>Time Borrowed</th>
-			<th>Send Return Reminder</th>
-			<th>Returned?</th>
-		</tr>
-	</table>
-	<table class='av-borrowed'>
-		<tr>
-			<th>Event Name</th>
-			<th>Manager Name</th>
-			<th>Item Borrowed</th>
-			<th>Time Borrowed</th>
-			<th>Location Used</th>
-			<th>Returned?</th>
-		</tr>
-	</table>
-	<table class='game-inventory'>
-		<tr>
-			<th>Game</th>
-			<th>Image</th>
-			<th>Total Quantity</th>
-			<th>Number Available</th>
-			<th>Storage Location</th>
-		</tr>
-	</table>
-	<table class='av-inventory'>
-		<tr>
-			<th>Item</th>
-			<th>Image</th>
-			<th>Total Quantity</th>
-			<th>Number Available</th>
-			<th>Storage Location</th>
-		</tr>
-	</table>
+	<main class='content'>
+		<header class='clearfix'>
+			<img class='logo' src="images/usdanlogo.gif" alt="Usdan Logo">
+			<h1 class='title'>Usdan Inventory Tracking</h1>
+			<h2 class='title-out'>Currently Checked-Out</h2>
+			<h2 class='title-inventory'>Current Inventory</h2>
+		</header>
+		<div class="columns headers clearfix">
+			<div class='test'>first</div>
+			<div class='test'>last</div>
+			<div class='test'>item</div>
+			<div class='test'>returned</div>
+			<div class='test'>remind</div>
+			<div class='test'>time</div>
+		</div>	
+		<div class="columns clearfix">
+			<div class='test'>Rachel</div>
+			<div class='test'>McCormik</div>
+			<div class='test'>Chess Board</div>
+			<div class='test'>Pressme</div>
+			<div class='test'>Pressm2</div>
+			<div class='test'>Sept 20/16</div>
+		</div>	
+		<div class="columns clearfix">
+			<div class='test'>Rachel</div>
+			<div class='test'>McCormik</div>
+			<div class='test'>Chess Board</div>
+			<div class='test'>Pressme</div>
+			<div class='test'>Pressm2</div>
+			<div class='test'>Sept 20/16</div>
+		</div>	
+		<table class='games-borrowed'>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Item Borrowed</th>
+				<th>Time Borrowed</th>
+				<th>Send Return Reminder</th>
+				<th>Returned?</th>
+			</tr>
+		</table>
+		<table class='av-borrowed'>
+			<tr>
+				<th>Event Name</th>
+				<th>Manager Name</th>
+				<th>Item Borrowed</th>
+				<th>Time Borrowed</th>
+				<th>Location Used</th>
+				<th>Returned?</th>
+			</tr>
+		</table>
+		<table class='game-inventory'>
+			<tr>
+				<th>Game</th>
+				<th>Image</th>
+				<th>Total Quantity</th>
+				<th>Number Available</th>
+				<th>Storage Location</th>
+			</tr>
+		</table>
+		<table class='av-inventory'>
+			<tr>
+				<th>Item</th>
+				<th>Image</th>
+				<th>Total Quantity</th>
+				<th>Number Available</th>
+				<th>Storage Location</th>
+			</tr>
+		</table>
+	</main>
 	<aside class='side-nav'>
 		<p class='gaming-side'>Gaming Inventory</p>
 		<p class='game-borrowed-side'>Games Borrowed</p>

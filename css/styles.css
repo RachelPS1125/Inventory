@@ -7,8 +7,14 @@ html, body{
 h1, p{
 	margin: 0;
 }
-header{
-	margin-left: 15rem;
+.test{
+	float: left;
+	width: 16%;
+}
+.clearfix:after{
+	display: table;
+	content: '';
+	clear: both;
 }
 .title-inventory{
 	display:none;
@@ -17,9 +23,7 @@ header{
 	float: left;
 }
 .games-borrowed, .av-borrowed, .game-inventory, .av-inventory{
-	width: 70%;
 	border: 1px solid black;
-	margin: 6rem auto;
 }
 .av-borrowed, .game-inventory, .av-inventory{
 	display: none;
@@ -75,4 +79,26 @@ header{
 }
 .side-arrow:hover{
 	cursor: pointer;
+}
+.content{
+	max-width: 800px;
+	margin: 0 auto;
+	border: 1px solid;
+}
+@media (max-width: 414px){
+	.test{
+		float: none;
+		width: 100%;
+	}
+	.headers{
+		display: none;
+	}
+	.columns>.test:nth-child(1):before{
+		content: 'First Name:';
+	}
+}
+@media (max-width: 892px){
+	.content{
+		margin-left: 50px;
+	}
 }
