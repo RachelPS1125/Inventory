@@ -88,6 +88,26 @@ h1, p{
 .new-borrow{
 	margin-left: 50px;
 }
+.add{
+	margin-left: 70px;
+}
+.overlay{
+	width: 50%;
+	height: 50%;
+	transform: translateY(-50%);	
+	webkit-transform: translateY(-50%);
+	color: #fff;
+	background: #808080;
+	opacity: 0.6;
+	position: absolute;
+	top: 50%;
+	margin: 0 auto;
+	z-index: 1000;
+	display: none;
+}
+.av-new, .game-new, .av-borrow{
+	display: none;
+}
 @media (max-width: 414px){
 	.test{
 		float: none;
