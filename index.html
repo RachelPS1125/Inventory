@@ -77,7 +77,30 @@
 				<th>Storage Location</th>
 			</tr>
 		</table>
-	</main>
+	<button class='add game-borrow'>New Game Borrow</button>
+	<button class='add av-borrow'>New AV Borrow</button>
+	<button class='add game-new'>Add Game Inventory</button>
+	<button class='add av-new'>Add AV Inventory</button>
+	<div class='overlay'>
+		<form class='new-borrow'>
+			First Name:<br>
+			<input class="first-name" type='text'><br>
+			Last Name:<br>
+			<input class="last-name" type='text'><br>
+			ID:<br>
+			<input class="id-num" type='text'><br>
+			Phone Number:<br>
+			<input class="phone" type='text'><br>
+			Time Out:<br>
+			<input class="time" type='text'><br>
+			Game:<br>
+			<select class='item-list' name="item" id="item"><br>
+				<option value="">Select One...</option>
+			</select>
+			<button class='user submit'>Submit</button>
+			<button class='close-window'>Close</button>
+		</form>
+	</div>
 	<aside class='side-nav'>
 		<p class='gaming-side'>Gaming Inventory</p>
 		<p class='game-borrowed-side'>Games Borrowed</p>
