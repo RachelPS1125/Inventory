@@ -80,10 +80,12 @@ $(document).ready(function(){
 	$('.add').click(function(){
 		$('.overlay').fadeIn(1000);
 	});
-	$("close-window").click(function(){
+	$(".close-window").click(function(event){
+		event.preventDefault();
 		$('.overlay').fadeOut(1000);
 	});
-	$('.submit').click(function(){
+	$('.new-borrow').submit(function(event){
+		event.preventDefault();
 		var first = $('.first-name').val();
 		var last = $('.last-name').val();
 		var phone = $('.phone').val();
@@ -104,6 +106,8 @@ $(document).ready(function(){
 			headers: {
 				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 			}
-		}).done();
+		}).done(function(){
+			console.log('record added');
+		});
 	});
 });
