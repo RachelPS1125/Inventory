@@ -7,7 +7,7 @@ html, body{
 h1, p{
 	margin: 0;
 }
-.test{
+.column{
 	float: left;
 	width: 16%;
 }
@@ -98,7 +98,6 @@ h1, p{
 	webkit-transform: translateY(-50%);
 	color: #fff;
 	background: #808080;
-	opacity: 0.6;
 	position: absolute;
 	top: 50%;
 	margin: 0 auto;
@@ -108,30 +107,36 @@ h1, p{
 .av-new, .game-new, .av-borrow{
 	display: none;
 }
+.template{
+	display: none;
+}
+.data-rows{
+	width: 100%;
+}
 @media (max-width: 414px){
-	.test{
+	.column{
 		float: none;
 		width: 100%;
 	}
 	.headers{
 		display: none;
 	}
-	.columns>.test:nth-child(1):before{
+	.row>.column:nth-child(1):before{
 		content: 'First Name: ';
 	}
-	.columns>.test:nth-child(2):before{
+	.row>.column:nth-child(2):before{
 		content: 'Last Name: ';
 	}
-	.columns>.test:nth-child(3):before{
+	.row>.column:nth-child(3):before{
 		content: 'Item: ';
 	}
-	.columns>.test:nth-child(4):before{
+	.row>.column:nth-child(4):before{
 		content: 'Returned?: ';
 	}
-	.columns>.test:nth-child(5):before{
+	.row>.column:nth-child(5):before{
 		content: 'Send Reminder?: ';
 	}
-	.columns>.test:nth-child(6):before{
+	.row>.column:nth-child(6):before{
 		content: 'Time Out: ';
 	}
 }

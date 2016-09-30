@@ -15,68 +15,78 @@
 			<h2 class='title-out'>Currently Checked-Out</h2>
 			<h2 class='title-inventory'>Current Inventory</h2>
 		</header>
-		<div class="games-borrowed columns headers clearfix">
-			<div class='test'>First Name</div>
-			<div class='test'>Last Name</div>
-			<div class='test'>Item</div>
-			<div class='test'>Returned?</div>
-			<div class='test'>Send Reminder?</div>
-			<div class='test'>Time Out</div>
+		<div class="games-borrowed row headers clearfix">
+			<div class='column'>First Name</div>
+			<div class='column'>Last Name</div>
+			<div class='column'>Item</div>
+			<div class='column'>Returned?</div>
+			<div class='column'>Send Reminder?</div>
+			<div class='column'>Time Out</div>
 		</div>	
-		<div class="columns clearfix">
-			<div class='test'>Rachel</div>
-			<div class='test'>McCormik</div>
-			<div class='test'>Chess Board</div>
-			<div class='test'>Pressme</div>
-			<div class='test'>Pressm2</div>
-			<div class='test'>Sept 20/16</div>
+		<div class="av-inventory row headers clearfix">
+			<div class='column'>Item</div>
+			<div class='column'>Image</div>
+			<div class='column'># in Inventory</div>
+			<div class='column'># Available</div>
+			<div class='column'>Location</div>
 		</div>	
-		<table class='av-borrowed'>
-			<tr>
-				<th>Event Name</th>
-				<th>Manager Name</th>
-				<th>Item Borrowed</th>
-				<th>Time Borrowed</th>
-				<th>Location Used</th>
-				<th>Returned?</th>
-			</tr>
-		</table>
-		<table class='game-inventory'>
-			<tr>
-				<th>Game</th>
-				<th>Image</th>
-				<th>Total Quantity</th>
-				<th>Number Available</th>
-				<th>Storage Location</th>
-			</tr>
-		</table>
-		<table class='av-inventory'>
-			<tr>
-				<th>Item</th>
-				<th>Image</th>
-				<th>Total Quantity</th>
-				<th>Number Available</th>
-				<th>Storage Location</th>
-			</tr>
-		</table>
-	<button class='add game-borrow'>New Game Borrow</button>
-	<button class='add av-borrow'>New AV Borrow</button>
+		<div class="game-inventory row headers clearfix">
+			<div class='column'>Item</div>
+			<div class='column'>Image</div>
+			<div class='column'># in Inventory</div>
+			<div class='column'># Available</div>
+			<div class='column'>Location</div>
+		</div>	
+		<div class='data-rows'>
+			
+		</div>
+		<div class='template'>
+			<div class="av-inventory row clearfix">
+				<div class='av-item column'>Item Name</div>
+				<div class='av-image column'>Image</div>
+				<div class='av-quantity column'>Quantity</div>
+				<div class='av-available column'>Available</div>
+				<div class='av-location column'>Location</div>
+			</div>
+		</div>	
+		<div class='template'>
+			<div class="game-inventory row clearfix">
+				<div class='game-item column'>Item Name</div>
+				<div class='game-image column'>Image</div>
+				<div class='game-quantity column'>Quantity</div>
+				<div class='game-available column'>Available</div>
+				<div class='game-location column'>Location</div>
+			</div>
+		</div>	
+		<div class='template'>
+			<div class="games-borrowed row clearfix" data-id=''>
+				<div class='first column'>Rachel</div>
+				<div class='last column'>McCormik</div>
+				<div class='item column'>Chess Board</div>
+				<a href='#' class="returned column">Returned?</a>
+				<a href='#' class="reminder column">Send Reminder</a>
+				<div class='time column'>Sept 20/16</div>
+			</div>
+		</div>	
+	<button class='add game-borrow'>Add Borrower</button>
 	<button class='add game-new'>Add Game Inventory</button>
 	<button class='add av-new'>Add AV Inventory</button>
 	<div class='overlay'>
 		<form class='new-borrow'>
 			First Name:<br>
-			<input class="first-name" type='text'><br>
+			<input class='first-name' type='text'><br>
 			Last Name:<br>
-			<input class="last-name" type='text'><br>
+			<input class='last-name' type='text'><br>
 			ID:<br>
-			<input class="id-num" type='text'><br>
+			<input class='id-num' type='text'><br>
 			Phone Number:<br>
-			<input class="phone" type='text'><br>
-			Time Out:<br>
-			<input class="time" type='text'><br>
-			Game:<br>
-			<select class='item-list' name="item" id="item"><br>
+			<input class='phone' type='text'><br>
+			Type:<br>
+			<input class='game-radio' type='radio' name='inventory-type' value='Game'>Game<br>
+			<input class='av-radio' type='radio' name='inventory-type' value='AV'>
+			AV<br>
+			Item:<br>
+			<select class='inventory-list' name='inventory-items' id='inventory-items'><br>
 				<option value="">Select One...</option>
 			</select>
 			<button class='user submit'>Submit</button>
@@ -87,7 +97,6 @@
 		<p class='gaming-side'>Gaming Inventory</p>
 		<p class='game-borrowed-side'>Games Borrowed</p>
 		<p class='av-side'>AV Inventory</p>
-		<p class='av-borrowed-side'>AV Borrowed</p>
 		<div class='side-arrow'>
 			<p class='open'>></p>
 			<p class='close'><</p>
