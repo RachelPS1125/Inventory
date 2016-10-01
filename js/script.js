@@ -78,7 +78,7 @@ $(document).ready(function(){
 			var status = false;
 			var change = 1;
 		};
-		$.ajax({
+		return $.ajax({
 			url: 'https://usdangameinventory-b5d8.restdb.io/rest/borrower-information/'+borrowID,
 			method: 'PUT',
 			headers: {
@@ -87,8 +87,8 @@ $(document).ready(function(){
 			data:{
 				active: status,
 			}
-		}).done(function(){
-			$.ajax({
+		}).then(function(){
+			return $.ajax({
 				url: 'https://usdangameinventory-b5d8.restdb.io/rest/' +table,
 				method: 'GET',
 				headers: {
@@ -97,12 +97,13 @@ $(document).ready(function(){
 				data: {
 					q:JSON.stringify({Name: $(that).parent().find('.item').text()})
 				}
-			}).done(function(item){
+			})
+		}).then(function(item){
 				var itemID = item[0]._id;
 				var itemQuantity = item[0].Quantity;
 				console.log(itemID);
 				console.log(item);
-				$.ajax({
+				return $.ajax({
 					url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+ table+'/'+itemID,
 					method: 'PUT',
 					headers: {
@@ -111,9 +112,7 @@ $(document).ready(function(){
 					data:{
 						'Quantity': itemQuantity + change,
 					}	
-				}).done(function(){
 				});
-			});
 		});
 	}
 	var i = 0;
@@ -192,9 +191,14 @@ $(document).ready(function(){
 		};
 	});*/
 	$('.data-rows').on('click', '.returned', function(){
+		
 		var that = this;
-		updateQuantity('return', 'games', that);
-		$(that).parent().remove();
+		updateQuantity('return', 'games', that).then(function(){
+			$(that).parent().remove();	
+		}).fail(function(){
+			alert("Something wrong happened!");
+		});
+		
 	});
 	$('.add').click(function(){
 		$('.overlay').fadeIn(500);
