@@ -49,11 +49,11 @@ $(document).ready(function(){
 	}
 	function getInventoryList(table){
 		$.ajax({
-		url: 'https://usdangameinventory-b5d8.restdb.io/rest/' + table,
-		method: 'GET',
-		headers: {
-			'x-apikey': '57d1c8248dfe9ef744ec9bfe'
-		}
+			url: 'https://usdangameinventory-b5d8.restdb.io/rest/' + table,
+			method: 'GET',
+			headers: {
+				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
+			}
 		}).done(function(inventory){
 			$('.inventory-list').empty();
 			for(var i=0; i < inventory.length; i++){
@@ -67,53 +67,35 @@ $(document).ready(function(){
 		var date = new Date();
 		return (date.getMonth()+1) + '/' + date.getDate() + '/' + (date.getYear()-100) + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 	}
-	function updateQuantity(borrowOrReturn, table, that){
-		var borrowID = $(that).parent().attr('data-id');
-		console.log(borrowID);
-		if (borrowOrReturn === 'borrow'){
-			var status = true;
-			var change = -1;
-		}
-		else{
-			var status = false;
-			var change = 1;
-		};
+	function updateQuantity(change, table, itemName){
+		$('input[name="inventory-type"]').prop('checked', false);
+		$('.inventory-list').hide();
 		return $.ajax({
-			url: 'https://usdangameinventory-b5d8.restdb.io/rest/borrower-information/'+borrowID,
-			method: 'PUT',
+			url: 'https://usdangameinventory-b5d8.restdb.io/rest/' +table,
+			method: 'GET',
 			headers: {
 				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 			},
-			data:{
-				active: status,
+			data: {
+				q:JSON.stringify({Name: itemName})
 			}
-		}).then(function(){
+		}).then(function(item){
+			var itemID = item[0]._id;
+			var itemQuantity = item[0].Quantity;
 			return $.ajax({
-				url: 'https://usdangameinventory-b5d8.restdb.io/rest/' +table,
-				method: 'GET',
+				url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+ table+'/'+itemID,
+				method: 'PUT',
 				headers: {
 					'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 				},
-				data: {
-					q:JSON.stringify({Name: $(that).parent().find('.item').text()})
-				}
-			})
-		}).then(function(item){
-				var itemID = item[0]._id;
-				var itemQuantity = item[0].Quantity;
-				console.log(itemID);
-				console.log(item);
-				return $.ajax({
-					url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+ table+'/'+itemID,
-					method: 'PUT',
-					headers: {
-						'x-apikey': '57d1c8248dfe9ef744ec9bfe'
-					},
-					data:{
-						'Quantity': itemQuantity + change,
-					}	
-				});
+				data:{
+					'Quantity': itemQuantity + change,
+				}	
+			});
 		});
+	}
+	function showList(){
+		$('.inventory-list').show();
 	}
 	var i = 0;
 	fillBorrowers();
@@ -177,28 +159,27 @@ $(document).ready(function(){
 		$('.av-new').hide();
 		$('.game-new').hide();
 	});
-	/*$.ajax({
-		url: 'https://usdangameinventory-b5d8.restdb.io/rest/games',
-		method: 'GET',
-		headers: {
-			'x-apikey': '57d1c8248dfe9ef744ec9bfe'
-		}
-	}).done(function(games){
-		for(var i=0; i < games.length; i++){
-			if(games[i].Quantity > 0){
-				$('.game-list').append('<option value="'+games[i].Name+'">'+ games[i].Name +' - ' + games[i].Quantity +'</option>');
-			};
-		};
-	});*/
 	$('.data-rows').on('click', '.returned', function(){
-		
 		var that = this;
-		updateQuantity('return', 'games', that).then(function(){
-			$(that).parent().remove();	
-		}).fail(function(){
-			alert("Something wrong happened!");
+		var borrowID = $(that).parent().attr('data-id');
+		var itemName = $(that).parent().find('.item').text();
+		$(that).parent().find('.-blocked').show();
+		return $.ajax({
+			url: 'https://usdangameinventory-b5d8.restdb.io/rest/borrower-information/'+borrowID,
+			method: 'PUT',
+			headers: {
+				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
+			},
+			data:{
+				active: false,
+			}
+		}).then(function(){
+			updateQuantity(1, 'games', itemName).then(function(){
+				$(that).parent().remove();	
+			}).fail(function(){
+				alert("Something wrong happened!");
+			});
 		});
-		
 	});
 	$('.add').click(function(){
 		$('.overlay').fadeIn(500);
@@ -209,35 +190,43 @@ $(document).ready(function(){
 	});
 	$('.game-radio').click(function(){
 		getInventoryList('games');
+		showList();
 	});
 	$('.av-radio').click(function(){
 		getInventoryList('avinventory');
+		showList();
 	});
 	$('.new-borrow').submit(function(event){
 		event.preventDefault();
+		var itemName = $('.inventory-list').val();
 		var first = $('.first-name').val();
 		var last = $('.last-name').val();
 		var phone = $('.phone').val();
 		var studentID = $('.id-num').val();
 		var time = getDate();
-		$.ajax({
-			url: 'https://usdangameinventory-b5d8.restdb.io/rest/borrower-information',
-			method: 'POST',
-			data: {
-				'firstName': first,
-				'lastName': last,
-				'phoneNumber': phone,
-				'studentID': studentID,
-				'itemBorrowed': $('.inventory-list').val(),
-				'timeBorrowed': time,
-				'active': true
-			},
-			headers: {
-				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
-			}
-		}).done(function(){
-			fillBorrowers();
-			$('.overlay').fadeOut(100);
-		});
+		if(itemName && first && last && phone && studentID){
+			$.ajax({
+				url: 'https://usdangameinventory-b5d8.restdb.io/rest/borrower-information',
+				method: 'POST',
+				data: {
+					'firstName': first,
+					'lastName': last,
+					'phoneNumber': phone,
+					'studentID': studentID,
+					'itemBorrowed': itemName,
+					'timeBorrowed': time,
+					'active': true
+				},
+				headers: {
+					'x-apikey': '57d1c8248dfe9ef744ec9bfe'
+				}
+			}).done(function(){
+				updateQuantity(-1, 'games', itemName);
+				fillBorrowers();
+				$('.overlay').fadeOut(100);
+			});
+		}else{
+			alert('Please enter all information!')
+		}
 	});
 });
