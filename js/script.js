@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	var i = 0;
+	var inventoryType
 	function closeSide(){
 		$('.side-nav').css('margin-left','-15rem');
 		$('.open').show();
@@ -47,21 +49,22 @@ $(document).ready(function(){
 			};
 		});
 	}
-	function getInventoryList(table){
+	function populateInventoryDropDown(inventory){
+		$('.inventory-list').empty();
+		for(var i=0; i < inventory.length; i++){
+			if(inventory[i].Quantity > 0){
+				$('.inventory-list').append('<option value="'+inventory[i].Name+'">'+ inventory[i].Name +' - ' + inventory[i].Quantity +'</option>');
+			};
+		};
+	}
+	function getInventoryList(table, f){
 		$.ajax({
 			url: 'https://usdangameinventory-b5d8.restdb.io/rest/' + table,
 			method: 'GET',
 			headers: {
 				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 			}
-		}).done(function(inventory){
-			$('.inventory-list').empty();
-			for(var i=0; i < inventory.length; i++){
-				if(inventory[i].Quantity > 0){
-					$('.inventory-list').append('<option value="'+inventory[i].Name+'">'+ inventory[i].Name +' - ' + inventory[i].Quantity +'</option>');
-				};
-			};
-		});
+		}).done(f);
 	}
 	function getDate(){
 		var date = new Date();
@@ -94,10 +97,6 @@ $(document).ready(function(){
 			});
 		});
 	}
-	/*function addInventory(that){
-		var item = $(that)
-	*/
-	}
 	function showList(){
 		$('.inventory-list').show();
 	}
@@ -105,7 +104,6 @@ $(document).ready(function(){
 		$('.new-borrow').hide();
 		$('.new-inventory').show();
 	}
-	var i = 0;
 	fillBorrowers();
 	$('.open').click(function(){
 		$('.side-nav').css('margin-left','0');
@@ -198,29 +196,32 @@ $(document).ready(function(){
 	})
 	$('.game-new').click(function(){
 		showInventoryForm();
+		inventoryType = 'games';
 	});
 	$('.av-new').click(function(){
 		showInventoryForm();
+		inventoryType = 'avinventory';
 	});
 	$(".close-window").click(function(event){
 		event.preventDefault();
 		$('.overlay').fadeOut(100);
 	});
 	$('.game-radio').click(function(){
-		getInventoryList('games');
+		getInventoryList('games', populateInventoryDropDown);
 		showList();
 	});
 	$('.av-radio').click(function(){
-		getInventoryList('avinventory');
+		getInventoryList('avinventory', populateInventoryDropDown);
 		showList();
 	});
 	$('.new-borrow').submit(function(event){
 		event.preventDefault();
 		var itemName = $('.inventory-list').val();
-		var first = $('.first-name').val();
-		var last = $('.last-name').val();
-		var phone = $('.phone').val();
-		var studentID = $('.id-num').val();
+		var first = $('#first-name').val();
+		console.log(first);
+		var last = $('#last-name').val();
+		var phone = $('#phone').val();
+		var studentID = $('#id').val();
 		var time = getDate();
 		if(itemName && first && last && phone && studentID){
 			$.ajax({
@@ -243,13 +244,13 @@ $(document).ready(function(){
 				fillBorrowers();
 				$('.overlay').fadeOut(100);
 			});
-		}else if(first==false){
+		}else if(!first){
 			alert('Please enter first name');
-		}else if(last==false){
+		}else if(!last){
 			alert('Please enter last name');
-		}else if(phone==false){
+		}else if(!phone){
 			alert('Please enter phone number');
-		}else if(studentID==false){
+		}else if(!studentID){
 			alert('Please enter student ID number');
 		}else{
 			alert('Please select an item');
@@ -257,5 +258,26 @@ $(document).ready(function(){
 	});
 	$('.new-inventory').submit(function(event){
 		event.preventDefault();
+		var formData = new FormData();
+		formData.append('name', $('#item-name').val());
+		formData.append('itemLocation', $('#storage-location').val());
+		formData.append('Quantity', $('#num-available').val());
+		formData.append('Image', $('#image')[0].files[0]);
+		$.ajax({
+			url: 'https://usdangameinventory-b5d8.restdb.io/rest/' + inventoryType,
+			method: 'POST',
+			data: formData,
+			headers: {
+				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
+			}
+		}).done(function(){
+			getInventoryList(inventoryType, function(inventory){
+				for(var i = 0; i < inventory.length; i++){
+					var inventoryTable = $('.inventory').clone();
+					inventoryTable.find('.item').text(inventory[i].name);
+					inventoryTable.find('.image img').attr('src', inventory[i].image);
+				}
+			})
+		});	
 	});
 });

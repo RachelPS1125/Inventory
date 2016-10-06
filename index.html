@@ -41,21 +41,12 @@
 			
 		</div>
 		<div class='template'>
-			<div class="av-inventory row clearfix">
-				<div class='av-item column'>Item Name</div>
-				<div class='av-image column'>Image</div>
-				<div class='av-quantity column'>Quantity</div>
-				<div class='av-available column'>Available</div>
-				<div class='av-location column'>Location</div>
-			</div>
-		</div>	
-		<div class='template'>
-			<div class="game-inventory row clearfix">
-				<div class='game-item column'>Item Name</div>
-				<div class='game-image column'>Image</div>
-				<div class='game-quantity column'>Quantity</div>
-				<div class='game-available column'>Available</div>
-				<div class='game-location column'>Location</div>
+			<div class="inventory row clearfix">
+				<div class='item column'>Item Name</div>
+				<div class='image column'><img src="" alt=""></div>
+				<div class='quantity column'>Quantity</div>
+				<div class='available column'>Available</div>
+				<div class='location column'>Location</div>
 			</div>
 		</div>	
 		<div class='template'>
@@ -98,8 +89,8 @@
 			<input id='item-name' type='text'>		
 			<label for="image">Image:</label>
 			<input id='image' type='file' accept='image/*'><br>
-			<label for="num-increase">How many should be added to inventory?</label>
-			<input id='num-increase' type='text'><br>
+			<label for="num-available">How many should be added to inventory?</label>
+			<input id='num-available' type='text'><br>
 			<label for="storage-location">Where is this item stored?</label>
 			<input id='storage-location' type='text'><br>
 			<button class='user submit'>Submit</button>
