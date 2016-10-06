@@ -94,8 +94,16 @@ $(document).ready(function(){
 			});
 		});
 	}
+	/*function addInventory(that){
+		var item = $(that)
+	*/
+	}
 	function showList(){
 		$('.inventory-list').show();
+	}
+	function showInventoryForm(){
+		$('.new-borrow').hide();
+		$('.new-inventory').show();
 	}
 	var i = 0;
 	fillBorrowers();
@@ -184,6 +192,16 @@ $(document).ready(function(){
 	$('.add').click(function(){
 		$('.overlay').fadeIn(500);
 	});
+	$('.game-borrow').click(function(){
+		$('.new-borrow').show();
+		$('.new-inventory').hide();
+	})
+	$('.game-new').click(function(){
+		showInventoryForm();
+	});
+	$('.av-new').click(function(){
+		showInventoryForm();
+	});
 	$(".close-window").click(function(event){
 		event.preventDefault();
 		$('.overlay').fadeOut(100);
@@ -225,8 +243,19 @@ $(document).ready(function(){
 				fillBorrowers();
 				$('.overlay').fadeOut(100);
 			});
+		}else if(first==false){
+			alert('Please enter first name');
+		}else if(last==false){
+			alert('Please enter last name');
+		}else if(phone==false){
+			alert('Please enter phone number');
+		}else if(studentID==false){
+			alert('Please enter student ID number');
 		}else{
-			alert('Please enter all information!')
-		}
+			alert('Please select an item');
+		};
+	});
+	$('.new-inventory').submit(function(event){
+		event.preventDefault();
 	});
 });
