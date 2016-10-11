@@ -123,7 +123,7 @@ $(document).ready(function(){
 		$('.game-borrow').hide();
 		$('.av-new').hide();
 		$('.game-new').show();
-		inventoryType = 'games'
+		inventoryType = 'games';
 		fillInventory();
 	});
 	$('.game-borrowed-side').click(function(){
@@ -148,7 +148,7 @@ $(document).ready(function(){
 		$('.game-borrow').hide();
 		$('.av-new').show();
 		$('.game-new').hide();
-		inventoryType = 'avinventory'
+		inventoryType = 'avinventory';
 		fillInventory();
 	});
 	$('.data-rows').on('click', '.returned', function(){
@@ -227,6 +227,7 @@ $(document).ready(function(){
 			}).done(function(){
 				updateQuantity(-1, 'games', itemName);
 				fillBorrowers();
+				$('.new-borrow').clear();
 				$('.overlay').fadeOut(100);
 			});
 		}else if(!first){
@@ -257,15 +258,16 @@ $(document).ready(function(){
 					'x-apikey': '57d1c8248dfe9ef744ec9bfe',
 				}
 			}).done(function(){
-				getInventoryList(inventoryType, fillInventory)
-				$('.overlay').fadeOut(100)
+				getInventoryList(inventoryType, fillInventory);
+				$('.new-borrow').clear();
+				$('.overlay').fadeOut(100);
 			});	
 		}else if(!($('#item-name').val())){
 			alert('Please enter an item name');
 		}else if(!($('#num-available').val())){
-			alert('Please enter the number of items')
+			alert('Please enter the number of items');
 		}else{
-			alert('Please enter the storage location')
+			alert('Please enter the storage location');
 		};
 	});
 });
