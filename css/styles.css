@@ -22,10 +22,11 @@ h1, p{
 .logo{
 	float: left;
 }
-.games-borrowed, .av-borrowed, .game-inventory, .av-inventory{
+.games-borrowed, .game-inventory, .av-inventory{
 	border-bottom-style: solid;
+	border-width: 1px;
 } 
-.av-borrowed, .game-inventory, .av-inventory{
+.game-inventory, .av-inventory{
 	display: none;
 }
 .side-nav{
@@ -112,7 +113,7 @@ h1, p{
 	opacity: .8;
 	display: none;
 }
-.av-new, .game-new, .av-borrow{
+.av-new, .game-new{
 	display: none;
 }
 .template{
@@ -134,6 +135,9 @@ h1, p{
 }
 .inventory-list{
 	display: none;
+}
+.headers{
+	border-bottom: solid;
 }
 label{
 	display: block;

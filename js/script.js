@@ -14,7 +14,8 @@ $(document).ready(function(){
 				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 			}
 		}).done(function(borrowerInfo){
-			while(i < borrowerInfo.length){
+			$('.data-rows').empty();
+			for(var i = 0; i < borrowerInfo.length; i++){
 				var borrower = borrowerInfo[i];
 				if(borrower.active===true){	
 					var template = $('.template>.games-borrowed').clone();
@@ -25,27 +26,26 @@ $(document).ready(function(){
 					template.find('.item').text(borrower.itemBorrowed);
 					$('.data-rows').append(template);
 				};	
-				i++
 			};
 		});
 	};
-	function fillAV(){
+	function fillInventory(){
 		$.ajax({
-			url: 'https://usdangameinventory-b5d8.restdb.io/rest/avinventory',
+			url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+inventoryType,
 			method: 'GET',
 			headers: {
 				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 			}
-		}).done(function(avInventory){
-			while(i < avInventory.length){
-				var avItem = avInventory[i];	
-				var template = $('.template>.games-borrowed').clone();
-				template.find('.first').text(borrower.firstName);
-				template.find('.last').text(borrower.lastName);
-				template.find('.time').text(borrower.timeBorrowed)
-				template.find('.item').text(borrower.itemBorrowed);
-				$('.data-rows').append(template);
-				i++
+		}).done(function(inventory){
+			$('.data-rows').empty();
+				for(var i = 0; i < inventory.length; i++){
+					var inventoryTable = $('.template>.inventory').clone();
+					template.attr('data-id', inventory[i]._id);
+					inventoryTable.find('.item').text(inventory[i].Name);
+					inventoryTable.find('.quantity').text(inventory[i].Quantity);
+					inventoryTable.find('.available').text(inventory[i].Quantity);
+					inventoryTable.find('.location').text(inventory[i].itemLocation);
+					$('.data-rows').append(inventoryTable);
 			};
 		});
 	}
@@ -104,21 +104,6 @@ $(document).ready(function(){
 		$('.new-borrow').hide();
 		$('.new-inventory').show();
 	}
-	function getBase64Image(img) {
-    // Create an empty canvas element
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    // Copy the image contents to the canvas
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to guess the
-    // original format, but be aware the using "image/jpg" will re-encode the image.
-    var dataURL = canvas.toDataURL("image/png");
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
 	fillBorrowers();
 	$('.open').click(function(){
 		$('.side-nav').css('margin-left','0');
@@ -133,52 +118,38 @@ $(document).ready(function(){
 		$('.game-inventory').show();
 		$('.games-borrowed').hide();		
 		$('.av-inventory').hide();
-		$('.av-borrowed').hide();
 		$('.title-out').hide();
 		$('.title-inventory').show();
-		$('.av-borrow').hide();
 		$('.game-borrow').hide();
 		$('.av-new').hide();
 		$('.game-new').show();
+		inventoryType = 'games'
+		fillInventory();
 	});
 	$('.game-borrowed-side').click(function(){
 		closeSide();
 		$('.game-inventory').hide();
 		$('.games-borrowed').show();		
 		$('.av-inventory').hide();
-		$('.av-borrowed').hide();
 		$('.title-out').show();
 		$('.title-inventory').hide();
-		$('.av-borrow').hide();
 		$('.game-borrow').show();
 		$('.av-new').hide();
 		$('.game-new').hide();
+		fillBorrowers();
 	});
 	$('.av-side').click(function(){
 		closeSide();
 		$('.game-inventory').hide();
 		$('.games-borrowed').hide();		
 		$('.av-inventory').show();
-		$('.av-borrowed').hide();
 		$('.title-out').hide();
 		$('.title-inventory').show();
-		$('.av-borrow').hide();
 		$('.game-borrow').hide();
 		$('.av-new').show();
 		$('.game-new').hide();
-	});
-	$('.av-borrowed-side').click(function(){
-		closeSide();
-		$('.game-inventory').hide();
-		$('.games-borrowed').hide();		
-		$('.av-inventory').hide();
-		$('.av-borrowed').show();
-		$('.title-out').show();
-		$('.title-inventory').hide();
-		$('.av-borrow').show();
-		$('.game-borrow').hide();
-		$('.av-new').hide();
-		$('.game-new').hide();
+		inventoryType = 'avinventory'
+		fillInventory();
 	});
 	$('.data-rows').on('click', '.returned', function(){
 		var that = this;
@@ -272,30 +243,29 @@ $(document).ready(function(){
 	});
 	$('.new-inventory').submit(function(event){
 		event.preventDefault();
-		$.ajax({
-			url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+ inventoryType,
-			method: 'POST',
-			data: {
-				'name':$('#item-name').val(),
-				'itemLocation': $('#storage-location').val(),
-				'Quantity': $('#num-available').val(),
-				'available': $('#num-available').val(),
-			},
-			headers: {
-				'x-apikey': '57d1c8248dfe9ef744ec9bfe',
-			}
-		}).done(function(){
-			getInventoryList(inventoryType, function(inventory){
-				for(var i = 0; i < inventory.length; i++){
-					console.log(inventory.length);
-					var inventoryTable = $('.template>.inventory').clone();
-					inventoryTable.find('.item').text(inventory[i].name);
-					inventoryTable.find('.quantity').text(inventory[i].Quantity);
-					inventoryTable.find('.available').text(inventory[i].Quantity);
-					inventoryTable.find('.location').text(inventory[i].itemLocation);
-					$('.data-rows').append(inventoryTable);
-				};
-			});
-		});	
+		if($('#item-name').val() && $('#storage-location').val()&& $('#num-available').val()){
+			$.ajax({
+				url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+ inventoryType,
+				method: 'POST',
+				data: {
+					'name':$('#item-name').val(),
+					'itemLocation': $('#storage-location').val(),
+					'Quantity': $('#num-available').val(),
+					'available': $('#num-available').val(),
+				},
+				headers: {
+					'x-apikey': '57d1c8248dfe9ef744ec9bfe',
+				}
+			}).done(function(){
+				getInventoryList(inventoryType, fillInventory)
+				$('.overlay').fadeOut(100)
+			});	
+		}else if(!($('#item-name').val())){
+			alert('Please enter an item name');
+		}else if(!($('#num-available').val())){
+			alert('Please enter the number of items')
+		}else{
+			alert('Please enter the storage location')
+		};
 	});
 });
