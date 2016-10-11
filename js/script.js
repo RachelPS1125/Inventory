@@ -92,7 +92,7 @@ $(document).ready(function(){
 					'x-apikey': '57d1c8248dfe9ef744ec9bfe'
 				},
 				data:{
-					'Quantity': itemQuantity + change,
+					'available': itemQuantity + change,
 				}	
 			});
 		});
@@ -104,6 +104,21 @@ $(document).ready(function(){
 		$('.new-borrow').hide();
 		$('.new-inventory').show();
 	}
+	function getBase64Image(img) {
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to guess the
+    // original format, but be aware the using "image/jpg" will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
 	fillBorrowers();
 	$('.open').click(function(){
 		$('.side-nav').css('margin-left','0');
@@ -218,7 +233,6 @@ $(document).ready(function(){
 		event.preventDefault();
 		var itemName = $('.inventory-list').val();
 		var first = $('#first-name').val();
-		console.log(first);
 		var last = $('#last-name').val();
 		var phone = $('#phone').val();
 		var studentID = $('#id').val();
@@ -258,26 +272,30 @@ $(document).ready(function(){
 	});
 	$('.new-inventory').submit(function(event){
 		event.preventDefault();
-		var formData = new FormData();
-		formData.append('name', $('#item-name').val());
-		formData.append('itemLocation', $('#storage-location').val());
-		formData.append('Quantity', $('#num-available').val());
-		formData.append('Image', $('#image')[0].files[0]);
 		$.ajax({
-			url: 'https://usdangameinventory-b5d8.restdb.io/rest/' + inventoryType,
+			url: 'https://usdangameinventory-b5d8.restdb.io/rest/'+ inventoryType,
 			method: 'POST',
-			data: formData,
+			data: {
+				'name':$('#item-name').val(),
+				'itemLocation': $('#storage-location').val(),
+				'Quantity': $('#num-available').val(),
+				'available': $('#num-available').val(),
+			},
 			headers: {
-				'x-apikey': '57d1c8248dfe9ef744ec9bfe'
+				'x-apikey': '57d1c8248dfe9ef744ec9bfe',
 			}
 		}).done(function(){
 			getInventoryList(inventoryType, function(inventory){
 				for(var i = 0; i < inventory.length; i++){
-					var inventoryTable = $('.inventory').clone();
+					console.log(inventory.length);
+					var inventoryTable = $('.template>.inventory').clone();
 					inventoryTable.find('.item').text(inventory[i].name);
-					inventoryTable.find('.image img').attr('src', inventory[i].image);
-				}
-			})
+					inventoryTable.find('.quantity').text(inventory[i].Quantity);
+					inventoryTable.find('.available').text(inventory[i].Quantity);
+					inventoryTable.find('.location').text(inventory[i].itemLocation);
+					$('.data-rows').append(inventoryTable);
+				};
+			});
 		});	
 	});
 });
